@@ -26,14 +26,14 @@ public class LevelRotation : MonoBehaviour
                    new Vector3(0, 0, 60f));
                 newRotation.eulerAngles = new Vector3(0, 0, RoundRotation(newRotation.eulerAngles.z));
                 transform.DORotate(newRotation.eulerAngles,
-                   1f, RotateMode.Fast);
+                   0.5f, RotateMode.Fast);
                 break;
             case SwipeType.RIGHT:
                 newRotation = Quaternion.Euler(transform.eulerAngles +
                    new Vector3(0, 0, -60f));
                 newRotation.eulerAngles = new Vector3(0, 0, RoundRotation(newRotation.eulerAngles.z));
                 transform.DORotate(newRotation.eulerAngles,
-                    1f, RotateMode.Fast);
+                    0.5f, RotateMode.Fast);
                 break;
         }
     }

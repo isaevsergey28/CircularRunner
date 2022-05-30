@@ -1,19 +1,29 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerSpawner : MonoBehaviour
 {
     [SerializeField] private Vector3 _spawnPos;
-    [SerializeField] private List<GameObject> _allSkins;
+    [SerializeField] private List<SuitInfo> _allSkins;
 
     private void Start()
     {
+        _allSkins = GetComponentsInChildren<SuitInfo>().ToList();
         foreach (var skin in _allSkins)
         {
-            skin.gameObject.SetActive(skin.GetComponent<SuitInfo>().IsApplied);
-            skin.transform.position = _spawnPos;
+            if (skin.GetComponent<SuitInfo>().IsApplied)
+            {
+                skin.gameObject.SetActive(true);
+                skin.transform.position = _spawnPos;
+                skin.GetComponent<AnimationStateSystem>().ChangeState(State.Run);
+            }
+            else
+            {
+                skin.gameObject.SetActive(false);
+            }
         }
     }
 }

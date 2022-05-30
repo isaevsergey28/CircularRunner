@@ -1,4 +1,4 @@
-using System;
+    using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -46,6 +46,11 @@ public class SuitInfo : MonoBehaviour
                 IsLocked = false;
             }
         }
+    }
+
+    private void OnEnable()
+    {
+        GetComponent<Animator>().SetTrigger("HipHop");
     }
 
     public void SetIsLocked(bool state)

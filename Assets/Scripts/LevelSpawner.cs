@@ -9,22 +9,28 @@ public class LevelSpawner : MonoBehaviour
     [SerializeField] private float _activeLevelBlocksCount = 15;
 
     private List<GameObject> _activeLevelBocks = new List<GameObject>();
-    private float _removeRoadXPos = -10f;
+    private float _removeRoadXPos = -2f;
 
     private void Start()
-    {
+    { 
+        PauseOrDefeatSystem.instance.Subscribe(this);
         for (int i = 0; i < _activeLevelBlocksCount; i++)
         {
             SpawnRoad();
         }
     }
-
+    
+    private void OnDestroy()
+    {
+        PauseOrDefeatSystem.instance.Unsubscribe(this);
+    }
+    
     private void LateUpdate()
     {
-        CkeckForSpawn();
+        CheckForSpawn();
     }
 
-    private void CkeckForSpawn()
+    private void CheckForSpawn()
     {
         foreach (GameObject road in _activeLevelBocks)
         {
@@ -36,19 +42,21 @@ public class LevelSpawner : MonoBehaviour
             }
         }
     }
+
     private void SpawnRoad()
     {
         GameObject road = Instantiate(_allLevelBlocksPrefab[Random.Range(0, _allLevelBlocksPrefab.Length)], transform);
         Vector3 roadXPos;
         if (_activeLevelBocks.Count > 0)
         {
-            roadXPos = _activeLevelBocks[_activeLevelBocks.Count - 1].transform.position + 
-                new Vector3(0, 0, road.GetComponent<Collider>().bounds.max.z * 2);
+            roadXPos = _activeLevelBocks[_activeLevelBocks.Count - 1].transform.position +
+                       new Vector3(0, 0, road.GetComponent<Collider>().bounds.max.z * 2);
         }
         else
         {
             roadXPos = new Vector3(0f, 0f, 0f);
         }
+
         road.transform.position = roadXPos;
         _activeLevelBocks.Add(road);
     }

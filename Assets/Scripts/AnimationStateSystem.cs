@@ -28,6 +28,7 @@ public class AnimationStateSystem : MonoBehaviour
 }
 public enum State
 {
-    Dead,
+    Run,
+    Dead
     
 }

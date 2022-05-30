@@ -123,7 +123,7 @@ public class UnsupportedPlatformAgent : IronSourceIAgent
 	
 	public bool isRewardedVideoAvailable ()
 	{
-		Debug.Log ("Unsupported Platform");
+//		Debug.Log ("Unsupported Platform");
 		return false;
 	}
 

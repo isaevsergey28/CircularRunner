@@ -12,7 +12,8 @@ public class AnimatorController : MonoBehaviour
     {
         if (!_animator)
         {
-            _animator = GetComponent<Animator>();
+            _animator = GetComponentInChildren<Animator>();
+            _animator.ResetTrigger("HipHop");
         }
     }
 
@@ -22,8 +23,12 @@ public class AnimatorController : MonoBehaviour
         switch (state)
         {
             case State.Dead:
-                _animator.SetTrigger("DeathTrigger");
-                _currentAnimName = "DeathTrigger";
+                _animator.SetTrigger("FallDown");
+                _currentAnimName = "FallDown";
+                break;
+            case State.Run:
+                _animator.SetTrigger("Run");
+                _currentAnimName = "Run";
                 break;
         }
     }

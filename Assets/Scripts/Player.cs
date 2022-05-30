@@ -11,18 +11,13 @@ public class Player : MonoBehaviour
     private bool _isInvulnerable;
     private Coroutine _bonusCoroutine;
 
-    private void Start()
-    {
-        PauseOrDefeatSystem.instance.Subscribe(this);
-    }
-
     public void SetDeath()
     {
         if (_isInvulnerable)
             return;
         _animationStateSystem.ChangeState(State.Dead);
         onPlayerDeath?.Invoke();
-        UIManager.instance.ShowImmediately<LoseCanvas>();
+       StartCoroutine(ShowLosePanel());
     }
     
     public void MakeInvulnerable(float time)
@@ -40,5 +35,12 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         _isInvulnerable = false;
+    }
+
+    private IEnumerator ShowLosePanel()
+    {
+        yield return new WaitForSeconds(1f);
+        UIManager.instance.ShowImmediately<LoseCanvas>();
+       
     }
 }

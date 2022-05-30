@@ -16,6 +16,7 @@ public class SuitChanger : MonoBehaviour
       _toggle.onValueChanged.AddListener(OnToggleChanged);
       if (GetComponent<SuitInfo>().IsApplied)
       {
+         GetComponent<Animator>().SetTrigger("HipHop");
          _toggle.isOn = true;
          gameObject.SetActive(true);
       }
@@ -34,6 +35,7 @@ public class SuitChanger : MonoBehaviour
       {
          onSuitChanged?.Invoke(GetComponent<SuitInfo>());
       }
+
       gameObject.SetActive(active);
    }
 }

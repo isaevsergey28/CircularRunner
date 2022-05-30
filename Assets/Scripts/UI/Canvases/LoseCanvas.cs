@@ -9,6 +9,7 @@ public class LoseCanvas : ScreenView
     [SerializeField] private Button _restartButton;
     [SerializeField] private Button _mainMenuButton;
     
+    private string _diamondScoreKey = "DiamondScore";
     public override void Init()
     {
         _restartButton.onClick.AddListener(RestartGame);
@@ -32,6 +33,7 @@ public class LoseCanvas : ScreenView
     
     private void LoadMainMenu()
     {
+        PlayerPrefs.SetInt(_diamondScoreKey, PlayerPrefs.GetInt(_diamondScoreKey));
         StartCoroutine(LoadSceneAsync(SceneManager.GetActiveScene().buildIndex - 1));
     }
     

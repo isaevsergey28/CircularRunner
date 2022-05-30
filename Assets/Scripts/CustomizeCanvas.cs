@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
@@ -19,7 +20,8 @@ public class CustomizeCanvas : ScreenView
     private int _currentDiamonds;
     private string _diamondScoreKey = "DiamondScore";
     private string _diamondsLine = "diamonds";
-
+    private SuitInfo _activeSuit;
+    
     public override void Init()
     {
         if (PlayerPrefs.HasKey(_diamondScoreKey))
@@ -54,6 +56,25 @@ public class CustomizeCanvas : ScreenView
         }
     }
 
+    private void Update()
+    {
+        foreach (var skin in _allSkins)
+        {
+            if (skin.gameObject.activeSelf)
+            {
+                if (skin.IsApplied )
+                {
+                    _acceptSkinButton.image.color = new Color(0.200f, 0.55f, 0.55f);
+                }
+                else
+                {
+                    _acceptSkinButton.image.color =new Color(0.65f, 0.180f, 0.20f);
+                }
+            }
+            
+        }
+    }
+
     private void OnDestroy()
     {
         SuitChanger.onSuitChanged -= ChangeButtonsView;
@@ -63,7 +84,7 @@ public class CustomizeCanvas : ScreenView
     {
         UIManager.instance.Show<MainMenuCanvas>();
     }
-
+    
 
     private void AcceptSkin()
     {
@@ -72,11 +93,13 @@ public class CustomizeCanvas : ScreenView
             if (skin.gameObject.activeSelf && skin.IsLocked == false)
             {
                 skin.IsApplied = true;
+                _activeSuit = skin;
             }
             else
             {
                 skin.IsApplied = false;
             }
+            
         }
     }
 
@@ -115,5 +138,4 @@ public class CustomizeCanvas : ScreenView
             _costText.gameObject.SetActive(false);
         }
     }
-
 }
